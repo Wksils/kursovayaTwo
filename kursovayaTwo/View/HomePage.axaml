@@ -1,0 +1,249 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:kursovayaTwo.Converters"
+             x:Class="kursovayaTwo.View.HomePage">
+
+	<UserControl.Resources>
+		<conv:DateToNumber x:Key="DateToNumber"/>
+	</UserControl.Resources>
+
+	<Grid Background="White">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2.5*"/>
+			<ColumnDefinition Width="2*"/>
+		</Grid.ColumnDefinitions>
+
+		<Border Margin="10,100"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="10"
+                Grid.Column="0">
+
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="2*"/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="5*"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+
+				<TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Text="Основная информация"
+                           FontSize="16"
+                           FontStyle="Italic"
+                           Foreground="#FF315229"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold"/>
+
+				<TextBlock Text="количество активных продуктов"
+                           FontSize="14"
+                           Grid.Row="1"
+                           Grid.Column="0"/>
+
+				<TextBlock Text="количество действующих рецептур"
+                           FontSize="14"
+                           Grid.Row="2"
+                           Grid.Column="0"/>
+
+				<TextBlock Text="количество действующих технологических карт"
+                           FontSize="14"
+                           Grid.Row="3"
+                           Grid.Column="0"/>
+
+				<TextBlock Text="количество заказов в работе"
+                           FontSize="14"
+                           Grid.Row="4"
+                           Grid.Column="0"/>
+
+				<TextBlock Text="количество партий в производстве"
+                           FontSize="14"
+                           Grid.Row="5"
+                           Grid.Column="0"/>
+
+				<TextBlock Text="количество партий с отклонениями"
+                           FontSize="14"
+                           Grid.Row="6"
+                           Grid.Column="0"/>
+
+				<TextBlock Text="количество партий, ожидающих лабораторного решения"
+                           FontSize="14"
+                           Grid.Row="7"
+                           Grid.Column="0"/>
+
+
+				<TextBlock Text="{Binding ProductionInProgress}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Grid.Row="1"
+                           Grid.Column="1"/>
+
+				<TextBlock Text="{Binding ActiveRecipe}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Grid.Row="2"
+                           Grid.Column="1"/>
+
+				<TextBlock Text="{Binding ActiveCards}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Grid.Row="3"
+                           Grid.Column="1"/>
+
+				<TextBlock Text="{Binding ProductionInProgress}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Grid.Row="4"
+                           Grid.Column="1"/>
+
+				<TextBlock Text="{Binding ProductionActive}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Grid.Row="5"
+                           Grid.Column="1"/>
+
+				<TextBlock Text="{Binding BadProduction}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Grid.Row="6"
+                           Grid.Column="1"/>
+
+				<TextBlock Text="{Binding Tests}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Grid.Row="7"
+                           Grid.Column="1"/>
+			</Grid>
+		</Border>
+
+
+		<Border Margin="10,100"
+                BorderBrush="Gray"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="10"
+                Grid.Column="1">
+
+			<Grid>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1.5*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+					<RowDefinition Height="1*"/>
+				</Grid.RowDefinitions>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="3*"/>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+
+
+				<TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="3"
+                           Text="Последние события"
+                           FontSize="16"
+                           FontStyle="Italic"
+                           Foreground="#FF315229"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold"/>
+
+
+				<TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Text="запуск партии"
+                           FontSize="14"/>
+
+				<TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Text="начало шага экструзии"
+                           FontSize="14"/>
+
+				<TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           Text="завершение партии"
+                           FontSize="14"/>
+
+				<TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Text="критическое отклонение"
+                           FontSize="14"/>
+
+				<TextBlock Grid.Row="5"
+                           Grid.Column="0"
+                           Text="лабораторную блокировку партии"
+                           FontSize="14"/>
+
+
+				<TextBlock Text="{Binding LastStartProduction, Converter={StaticResource DateToNumber}}"
+                           Grid.Row="1"
+                           Grid.Column="1"
+                           FontSize="14"/>
+
+				<TextBlock Text="Название"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                           FontSize="14"/>
+
+				<TextBlock Text="{Binding LastEndProduction, Converter={StaticResource DateToNumber}}"
+                           Grid.Row="3"
+                           Grid.Column="1"
+                           FontSize="14"/>
+
+				<TextBlock Text="{Binding LastBadProduction, Converter={StaticResource DateToNumber}}"
+                           Grid.Row="4"
+                           Grid.Column="1"
+                           FontSize="14"/>
+
+				<TextBlock Text="{Binding LastBlockProduction, Converter={StaticResource DateToNumber}}"
+                           Grid.Row="5"
+                           Grid.Column="1"
+                           FontSize="14"/>
+
+
+				<TextBlock Text="{Binding LastStartProduction}"
+                           Grid.Row="1"
+                           Grid.Column="2"
+                           FontSize="14"/>
+
+				<TextBlock Text="25-05-2026"
+                           Grid.Row="2"
+                           Grid.Column="2"
+                           FontSize="14"/>
+
+				<TextBlock Text="{Binding LastEndProduction}"
+                           Grid.Row="3"
+                           Grid.Column="2"
+                           FontSize="14"/>
+
+				<TextBlock Text="{Binding LastBadProduction}"
+                           Grid.Row="4"
+                           Grid.Column="2"
+                           FontSize="14"/>
+
+				<TextBlock Text="{Binding LastBlockProduction}"
+                           Grid.Row="5"
+                           Grid.Column="2"
+                           FontSize="14"/>
+
+			</Grid>
+		</Border>
+
+	</Grid>
+
+</UserControl>

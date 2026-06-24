@@ -1,0 +1,225 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:kursovayaTwo.Converters"
+        x:Class="kursovayaTwo.View.Windows.AddEditBatch"
+        Width="600"
+        Height="750"
+        Title="RecipeInfo">
+
+
+	<Window.Resources>
+
+		<conv:IdToFio x:Key="IdToFio"/>
+		<conv:IdToProductName x:Key="ProductName"/>
+		<conv:IdToUomName x:Key="UomName"/>
+
+	</Window.Resources>
+
+
+	<Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*"/>
+			<RowDefinition Height="3*"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+
+
+		<Grid Grid.Row="0">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+
+
+			<StackPanel Grid.Column="0">
+
+				<TextBlock Text="Номер партии*"
+                           Margin="10,0"/>
+
+				<TextBox Margin="10"
+                         Background="#FFEDEDED"
+                         Text="{Binding EditCopy.BatchNumber}"/>
+
+			</StackPanel>
+
+
+
+			<StackPanel Grid.Column="1">
+
+				<TextBlock Text="Материал*"
+                           Margin="10,0"/>
+
+				<ComboBox Margin="10"
+                          Background="#FFEDEDED"
+                          ItemsSource="{Binding Materials}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="MaterialId"
+                          SelectedValue="{Binding EditCopy.MaterialId}"/>
+
+			</StackPanel>
+
+
+
+			<StackPanel Grid.Column="2">
+
+				<TextBlock Text="Статус*"
+                           Margin="10,0"/>
+
+				<ComboBox Margin="10"
+                          Background="#FFEDEDED"
+                          SelectedItem="{Binding EditCopy.Status}">
+
+					<ComboBoxItem>quarantine</ComboBoxItem>
+					<ComboBoxItem>approved</ComboBoxItem>
+					<ComboBoxItem>rejected</ComboBoxItem>
+					<ComboBoxItem>consumed</ComboBoxItem>
+					<ComboBoxItem>expired</ComboBoxItem>
+
+				</ComboBox>
+
+			</StackPanel>
+
+
+
+
+			<StackPanel Grid.Row="1">
+
+				<TextBlock Text="Поставщик*"
+                           Margin="10,0"/>
+
+				<TextBox Margin="10"
+                         Background="#FFEDEDED"
+                         Text="{Binding EditCopy.Supplier}"/>
+
+			</StackPanel>
+
+
+
+			<StackPanel Grid.Row="1"
+                        Grid.Column="1">
+
+				<TextBlock Text="Дата производства*"
+                           Margin="10,0"/>
+
+				<DatePicker Margin="10"
+                            SelectedDate="{Binding ManufactureDateProxy}"/>
+
+			</StackPanel>
+
+
+
+			<StackPanel Grid.Row="1"
+                        Grid.Column="2">
+
+				<TextBlock Text="Дата окончания срока годности*"
+                           Margin="10,0"/>
+
+				<DatePicker Margin="10"
+                            SelectedDate="{Binding ExpiryDateProxy}"/>
+
+			</StackPanel>
+
+
+
+
+			<StackPanel Grid.Row="2"
+                        Orientation="Horizontal">
+
+				<StackPanel Width="110">
+
+					<TextBlock Text="Количество"
+                               Margin="10,0"/>
+
+					<TextBox Margin="10"
+                             Text="{Binding EditCopy.Quantity}"/>
+
+				</StackPanel>
+
+
+
+				<StackPanel>
+
+					<TextBlock Text="ед. измерения*"
+                               Margin="10,0"/>
+
+					<ComboBox Margin="10"
+                              ItemsSource="{Binding Uom}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="UomId"
+                              SelectedValue="{Binding EditCopy.UomId}"/>
+
+				</StackPanel>
+
+
+			</StackPanel>
+			<StackPanel Grid.Row="2"
+                        Grid.Column="1">
+				<TextBlock Text="Когда поступила"
+                           Margin="10,0"/>
+				<DatePicker Margin="10"
+							SelectedDate="{Binding EditCopy.ReceivedAt}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Row="2"
+                        Grid.Column="2">
+
+				<TextBlock Text="Склад"
+                           Margin="10,0"/>
+
+				<TextBox Margin="10"
+                         Text="{Binding EditCopy.StorageLocation}"/>
+			</StackPanel>
+		</Grid>
+		<ListBox Grid.Row="1"
+                 Margin="10"
+                 ItemsSource="{Binding Tests}"
+                 x:Name="testsListView">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid ColumnDefinitions="50,80,100,100,120,120,50"
+                          Height="40">
+						<TextBlock Text="{Binding TestType}"
+                                   Grid.Column="0"/>
+						<TextBlock Text="{Binding Priority}"
+                                   Grid.Column="1"/>
+						<TextBlock Text="{Binding StartedAt}"
+                                   Grid.Column="2"/>
+						<TextBlock Text="{Binding AssignedTo, Converter={StaticResource IdToFio}}"
+                                   Grid.Column="3"/>
+						<TextBlock Text="{Binding Comment}"
+                                   Grid.Column="4"/>
+						<TextBlock Text="{Binding ControlledParameters}"
+                                   Grid.Column="5"/>
+						<Button Grid.Column="6"
+                                Background="Transparent"
+                                Click="EditTest_Click">
+
+							<Image Source="avares://kursovayaTwo/Resources/edit.png"/>
+						</Button>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Grid.Row="2"
+                Width="100"
+                Height="25"
+                Margin="10"
+                HorizontalAlignment="Left"
+                Background="#FF7676FF"
+                Foreground="White"
+                x:Name="btn"
+                Click="Button_Click"/>
+	</Grid>
+</Window>

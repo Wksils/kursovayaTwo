@@ -1,0 +1,136 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:kursovayaTwo.Converters"
+             x:Class="kursovayaTwo.View.TechCardPage"
+             Background="White">
+
+
+	<UserControl.Resources>
+		<conv:IdToProductName x:Key="ProductName"/>
+	</UserControl.Resources>
+
+
+	<Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="3*"/>
+		</Grid.RowDefinitions>
+
+
+		<Grid Grid.Row="0">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+
+			<Button Width="30"
+                    Height="30"
+                    Content="+"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Blue"
+                    Command="{Binding AddCommand}"/>
+
+
+			<Button Grid.Column="2"
+                    Width="30"
+                    Height="30"
+                    Background="Transparent">
+
+				<Image Source="avares://kursovayaTwo/Resources/filter.png"/>
+
+			</Button>
+
+
+		</Grid>
+
+
+
+		<ListBox x:Name="recipeList"
+                 Grid.Row="1"
+                 Margin="100,10"
+                 ItemsSource="{Binding ListCards}">
+
+
+			<ListBox.ItemTemplate>
+
+				<DataTemplate>
+
+
+					<Grid Height="40">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="150"/>
+						</Grid.ColumnDefinitions>
+
+
+
+						<TextBlock Grid.Column="0"
+                                   Text="{Binding ProductId, Converter={StaticResource ProductName}}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="1"
+                                   Text="{Binding Version}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="2"
+                                   Text="{Binding Status}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="3"
+                                   Text="{Binding IsActive}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+
+						<StackPanel Grid.Column="4"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+
+
+							<Button Width="30"
+                                    Height="30"
+                                    Background="Transparent"
+                                    Command="{Binding $parent[ListBox].DataContext.ReadCommand}"
+                                    CommandParameter="{Binding}">
+
+								<Image Source="avares://kursovayaTwo/Resources/Vector-1.png"/>
+
+							</Button>
+
+
+
+							<Button Width="30"
+                                    Height="30"
+                                    Background="Transparent"
+                                    Command="{Binding $parent[ListBox].DataContext.EditCommand}"
+                                    CommandParameter="{Binding}">
+
+								<Image Source="avares://kursovayaTwo/Resources/edit.png"/>
+
+							</Button>
+						</StackPanel>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

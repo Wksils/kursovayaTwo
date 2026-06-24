@@ -1,0 +1,68 @@
+<Window
+    x:Class="kursovayaTwo.View.LoginViews"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="LoginViews"
+    Width="400"
+    Height="300"
+    WindowStartupLocation="CenterScreen">
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*" />
+			<ColumnDefinition Width="8*" />
+			<ColumnDefinition Width="2*" />
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<StackPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            VerticalAlignment="Center">
+
+			<TextBlock
+                Text="Введите логин"
+                FontSize="14"
+                Foreground="#FF888888" />
+
+			<TextBox
+                Height="30"
+                Text="{Binding Login}" />
+		</StackPanel>
+
+		<StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            VerticalAlignment="Center">
+
+			<TextBlock
+                Text="Введите пароль"
+                FontSize="14"
+                Foreground="#FF888888" />
+
+			<TextBox
+                x:Name="Password"
+                Height="30"
+				Text="{Binding Password}"
+                PasswordChar="*"/>
+		</StackPanel>
+
+		<Button
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="50,25"
+            Content="Войти"
+            Command="{Binding AuthCommand}"
+            CommandParameter="{Binding #Password}"
+            Background="#FF85C889"
+            Foreground="#FF2A6515"
+            FontWeight="Bold"
+            FontSize="14" />
+	</Grid>
+
+</Window>

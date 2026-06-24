@@ -1,0 +1,161 @@
+<Window
+ x:Class="kursovayaTwo.View.MainWindow"
+ xmlns="https://github.com/avaloniaui"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ Title="MainWindow"
+ Width="800"
+ Height="450"
+ WindowState="Maximized">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="13*" />
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="0" Background="#FFDADADA">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="5*" />
+				<ColumnDefinition Width="10*" />
+				<ColumnDefinition Width="5*" />
+			</Grid.ColumnDefinitions>
+
+			<DockPanel Grid.Column="0" Width="110">
+
+				<Image
+					Source="avares://kursovayaTwo/Resources/logo.png"
+					Width="30"
+					Height="30" />
+
+				<TextBlock
+					Text="Formycon"
+					VerticalAlignment="Center"
+					FontSize="14"
+					FontWeight="Bold"
+					Foreground="#FF4B7D3E" />
+
+			</DockPanel>
+
+			<TextBox
+				Grid.Column="1"
+				Width="350"
+				Height="25"
+				Text="Search..."
+				Foreground="Gray"
+				VerticalContentAlignment="Center" />
+
+			<Button
+				Grid.Column="2"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Background="Transparent"
+				BorderThickness="0"
+				Click="ProfileButton_Click">
+
+				<Button.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header="Мой профиль"/>
+						<MenuItem Header="Сменить пароль"/>
+						<Separator/>
+						<MenuItem
+							Header="Выход"
+							Foreground="#FF7D1313"
+							Command="{Binding LogoutCommand}"/>
+					</ContextMenu>
+				</Button.ContextMenu>
+
+				<DockPanel Width="190">
+
+					<StackPanel>
+						<TextBlock
+							Text="{Binding CurrentUser.FullName}"
+							FontWeight="Bold"/>
+
+						<TextBlock
+							Text="{Binding CurrentUser.Role}"/>
+					</StackPanel>
+
+					<Image
+						Source="avares://kursovayaTwo/Resources/testIcon.png"
+						Width="30"
+						Height="25"/>
+
+				</DockPanel>
+
+			</Button>
+
+		</Grid>
+
+		<Grid Grid.Row="1">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="165*" />
+				<ColumnDefinition Width="511*" />
+			</Grid.ColumnDefinitions>
+
+			<StackPanel Grid.Column="0" Background="#FFE4E4E4">
+
+				<Border Height="20"/>
+
+				<Button Command="{Binding HomePageCommand}">
+					<DockPanel>
+						<Image Source="avares://kursovayaTwo/Resources/home_fill.png"/>
+						<TextBlock Text="Главная"/>
+					</DockPanel>
+				</Button>
+
+				<Separator/>
+
+				<Button Command="{Binding ProductionPageCommand}">
+					<DockPanel>
+						<Image Source="avares://kursovayaTwo/Resources/tag.png"/>
+						<TextBlock Text="Продукция"/>
+					</DockPanel>
+				</Button>
+
+				<Separator/>
+
+				<Button Command="{Binding RecipesRageCommand}">
+					<DockPanel>
+						<Image Source="avares://kursovayaTwo/Resources/content_paste.png"/>
+						<TextBlock Text="Рецептуры"/>
+					</DockPanel>
+				</Button>
+
+				<Separator/>
+
+				<Button Command="{Binding CardPageCommand}">
+					<DockPanel>
+						<Image Source="avares://kursovayaTwo/Resources/library_books.png"/>
+						<TextBlock Text="Техкарты"/>
+					</DockPanel>
+				</Button>
+
+				<Separator/>
+
+				<Button Command="{Binding BatchPageCommand}">
+					<DockPanel>
+						<Image Source="avares://kursovayaTwo/Resources/ic_local_shipping_48px.png"/>
+						<TextBlock Text="Партии"/>
+					</DockPanel>
+				</Button>
+
+				<Separator/>
+
+				<Button Command="{Binding ReportRageCommand}">
+					<DockPanel>
+						<Image Source="avares://kursovayaTwo/Resources/file_blank_fill.png"/>
+						<TextBlock Text="Отчеты"/>
+					</DockPanel>
+				</Button>
+
+			</StackPanel>
+
+			<ContentControl
+				Grid.Column="1"
+				Content="{Binding SelectedPage}" />
+
+		</Grid>
+
+	</Grid>
+</Window>

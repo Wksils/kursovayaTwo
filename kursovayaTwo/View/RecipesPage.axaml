@@ -1,0 +1,206 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:kursovayaTwo.Converters"
+             x:Class="kursovayaTwo.View.RecipesPage"
+             Background="White">
+
+	<UserControl.Resources>
+		<conv:IdToFio x:Key="IdToFio"/>
+		<conv:IdToProductName x:Key="ProductName"/>
+	</UserControl.Resources>
+
+
+	<Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="3*"/>
+		</Grid.RowDefinitions>
+
+
+		<Popup IsOpen="{Binding IsFilterOpen, Mode=TwoWay}"
+               PlacementTarget="{Binding ElementName=recipeList}"
+               IsLightDismissEnabled="True"
+               Placement="Center">
+
+			<Border Background="White"
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1"
+                    Padding="15">
+
+				<StackPanel Width="200">
+
+
+					<TextBlock Text="Продукт"
+                               FontWeight="Bold"
+                               Margin="0,0,0,5"/>
+
+					<ItemsControl ItemsSource="{Binding ProductFilters}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<CheckBox Content="{Binding Label}"
+                                          IsChecked="{Binding IsChacked, Mode=TwoWay}"
+                                          Margin="0,3"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+
+
+					<TextBlock Text="Статус"
+                               FontWeight="Bold"
+                               Margin="0,10,0,5"/>
+
+					<ItemsControl ItemsSource="{Binding StatusFilters}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<CheckBox Content="{Binding Label}"
+                                          IsChecked="{Binding IsChacked, Mode=TwoWay}"
+                                          Margin="0,3"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+
+
+					<TextBlock Text="Версия"
+                               FontWeight="Bold"
+                               Margin="0,10,0,5"/>
+
+					<ItemsControl ItemsSource="{Binding VersionFilters}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<CheckBox Content="{Binding Label}"
+                                          IsChecked="{Binding IsChacked, Mode=TwoWay}"
+                                          Margin="0,3"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+
+
+					<Button Content="Применить"
+                            Margin="0,10,0,0"
+                            Background="#FF7676FF"
+                            Foreground="White"
+                            Command="{Binding ApplyFilterOptionsCommand}"/>
+
+				</StackPanel>
+
+			</Border>
+
+		</Popup>
+
+
+
+		<Grid Grid.Row="0">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+
+			<Button Width="30"
+                    Height="30"
+                    Content="+"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Blue"
+                    Command="{Binding AddCommand}"/>
+
+
+			<Button Grid.Column="2"
+                    Height="30"
+                    Width="30"
+                    Background="Transparent"
+                    Command="{Binding ToggleFilterCommand}">
+
+				<Image Source="/Resources/filter.png"/>
+
+			</Button>
+
+		</Grid>
+
+
+
+		<ListBox x:Name="recipeList"
+                 Grid.Row="1"
+                 Margin="10"
+                 ItemsSource="{Binding Recipes}">
+
+			<ListBox.ItemTemplate>
+
+				<DataTemplate>
+
+					<Grid>
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="120"/>
+							<ColumnDefinition Width="200"/>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="100"/>
+						</Grid.ColumnDefinitions>
+
+
+						<TextBlock Grid.Column="0"
+                                   Text="{Binding ProductId, Converter={StaticResource ProductName}}"
+                                   HorizontalAlignment="Center"/>
+
+						<TextBlock Grid.Column="1"
+                                   Text="{Binding Version}"
+                                   HorizontalAlignment="Center"/>
+
+						<TextBlock Grid.Column="2"
+                                   Text="{Binding Status}"
+                                   HorizontalAlignment="Center"/>
+
+						<TextBlock Grid.Column="3"
+                                   Text="{Binding CreatedAt}"
+                                   HorizontalAlignment="Center"/>
+
+						<TextBlock Grid.Column="4"
+                                   Text="{Binding CreatedBy, Converter={StaticResource IdToFio}}"
+                                   HorizontalAlignment="Center"/>
+
+						<TextBlock Grid.Column="5"
+                                   Text="{Binding Notes}"
+                                   HorizontalAlignment="Center"/>
+
+
+						<StackPanel Grid.Column="6"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+
+
+							<Button Width="30"
+                                    Height="30"
+                                    Background="Transparent"
+                                    Command="{Binding DataContext.ReadCommand, ElementName=recipeList}"
+                                    CommandParameter="{Binding}">
+
+								<Image Source="/Resources/Vector-1.png"/>
+
+							</Button>
+
+
+							<Button Width="30"
+                                    Height="30"
+                                    Background="Transparent"
+                                    Command="{Binding DataContext.EditCommand, ElementName=recipeList}"
+                                    CommandParameter="{Binding}">
+
+								<Image Source="/Resources/edit.png"/>
+
+							</Button>
+						</StackPanel>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>

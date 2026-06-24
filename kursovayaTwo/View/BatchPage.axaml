@@ -1,0 +1,268 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:kursovayaTwo.Converters"
+             x:Class="kursovayaTwo.View.BatchPage"
+             Background="White">
+
+
+	<UserControl.Resources>
+		<conv:IdToMaterialName x:Key="MaterialName"/>
+		<conv:IdToUomName x:Key="UomName"/>
+		<conv:StringToBrush x:Key="Brush"/>
+		<conv:BatchIdToLastTestConverter x:Key="LastDate"/>
+	</UserControl.Resources>
+
+
+	<Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="3*"/>
+		</Grid.RowDefinitions>
+
+
+		<Popup IsOpen="{Binding IsFilterOpen, Mode=TwoWay}"
+               PlacementTarget="{Binding #productionList}"
+               IsLightDismissEnabled="True">
+
+			<Border Background="White"
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1"
+                    Padding="15">
+
+				<StackPanel Width="200">
+
+					<TextBlock Text="Статус"
+                               FontWeight="Bold"
+                               Margin="0,0,0,5"/>
+
+					<ItemsControl ItemsSource="{Binding StatusFilters}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<CheckBox Content="{Binding Value}"
+                                          IsChecked="{Binding IsChacked, Mode=TwoWay}"
+                                          Margin="0,3"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+
+
+					<TextBlock Text="Категория"
+                               FontWeight="Bold"
+                               Margin="0,10,0,5"/>
+
+					<ItemsControl ItemsSource="{Binding CategoryFilters}">
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<CheckBox Content="{Binding Value}"
+                                          IsChecked="{Binding IsChacked, Mode=TwoWay}"
+                                          Margin="0,3"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+
+
+					<Button Content="Применить"
+                            Margin="0,10,0,0"
+                            Background="#FF7676FF"
+                            Foreground="White"
+                            Command="{Binding ApplyFilterOptionsCommand}"/>
+
+				</StackPanel>
+
+			</Border>
+
+		</Popup>
+
+
+
+		<Grid Grid.Row="0">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+
+			<Button Width="30"
+                    Height="30"
+                    Content="+"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Blue"
+                    Command="{Binding AddCommand}"/>
+
+
+			<DockPanel Grid.Column="1">
+
+
+				<ComboBox Width="180"
+                          Height="30"
+                          IsEditable="True"
+                          FontSize="14"
+                          ItemsSource="{Binding CodeList}"
+                          SelectedItem="{Binding SelectedCode, Mode=TwoWay}"
+                          Text="{Binding SelectedCode, Mode=TwoWay}"/>
+
+
+				<ComboBox Width="180"
+                          Height="30"
+                          DockPanel.Dock="Right"
+                          FontSize="14"
+                          ItemsSource="{Binding MaterialList}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="MaterialId"
+                          SelectedValue="{Binding SelectedMaterialId, Mode=TwoWay}"/>
+
+
+			</DockPanel>
+
+
+
+			<Button Grid.Column="2"
+                    Width="30"
+                    Height="30"
+                    Background="Transparent"
+                    Command="{Binding ToggleFilterCommand}">
+
+				<Image Source="avares://kursovayaTwo/Resources/filter.png"/>
+
+			</Button>
+
+
+		</Grid>
+
+
+
+
+
+		<ListBox x:Name="productionList"
+                 Grid.Row="1"
+                 Margin="10"
+                 ItemsSource="{Binding BatchRows}">
+
+
+			<ListBox.ItemTemplate>
+
+				<DataTemplate>
+
+
+					<Grid Height="40">
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="50"/>
+							<ColumnDefinition Width="50"/>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="150"/>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="70"/>
+							<ColumnDefinition Width="100"/>
+							<ColumnDefinition Width="120"/>
+							<ColumnDefinition Width="150"/>
+						</Grid.ColumnDefinitions>
+
+
+
+						<Ellipse Grid.Column="0"
+                                 Width="10"
+                                 Height="10"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Fill="{Binding Status, Converter={StaticResource Brush}}"/>
+
+
+						<TextBlock Grid.Column="1"
+                                   Text="{Binding BatchNumber}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="2"
+                                   Text="{Binding MaterialId, Converter={StaticResource MaterialName}}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="3"
+                                   Text="{Binding Supplier}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="4"
+                                   Text="{Binding ReceivedAt}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="5"
+                                   Text="{Binding Quantity}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="6"
+                                   Text="{Binding UomId, Converter={StaticResource UomName}}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="7"
+                                   Text="{Binding Status}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+						<TextBlock Grid.Column="8"
+                                   Text="{Binding BatchId, Converter={StaticResource LastDate}}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+
+
+
+						<StackPanel Grid.Column="9"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+
+
+							<Button Width="30"
+                                    Height="30"
+                                    Background="Transparent"
+                                    Content="+"
+                                    FontSize="16"
+                                    Command="{Binding $parent[ListBox].DataContext.OpenTestCommand}"
+                                    CommandParameter="{Binding}"/>
+
+
+							<Button Width="30"
+                                    Height="30"
+                                    Background="Transparent"
+                                    Command="{Binding $parent[ListBox].DataContext.EditCommand}"
+                                    CommandParameter="{Binding}">
+
+								<Image Source="avares://kursovayaTwo/Resources/edit.png"/>
+
+							</Button>
+
+
+							<Button Width="30"
+                                    Height="30"
+                                    Background="Transparent"
+                                    Command="{Binding $parent[ListBox].DataContext.OpenCardCommand}"
+                                    CommandParameter="{Binding}">
+
+								<Image Source="avares://kursovayaTwo/Resources/Vector-1.png"/>
+
+							</Button>
+						</StackPanel>
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
+</UserControl>
