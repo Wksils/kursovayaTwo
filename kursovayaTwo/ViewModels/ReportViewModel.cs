@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using kursovayaTwo.Models.ReportRow;
 using kursovayaTwo.Services;
-using kursovayaTwo.Views.Windows;
+using kursovayaTwo.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,32 +40,43 @@ namespace kursovayaTwo.ViewModel
         private async Task OpenBatchReport()
         {
             var rows = await BuildBatchReport();
-            new ReportWindow("Отчёт по партиям", "batch", rows).ShowDialog();
+            var window = new ReportWindow("Отчёты по партиям", "batch", rows);
+            var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            await window.ShowDialog(desktop?.MainWindow);
         }
         [RelayCommand]
         private async Task OpenDeviationReport()
         {
             var rows = await BuildDeviationReport();
-            new ReportWindow("Отчёт по отклонениям", "deviation", rows).ShowDialog();
+            var window = new ReportWindow("Отчёт по отклонениям", "deviation", rows);
+            var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            await window.ShowDialog(desktop?.MainWindow);
         }
         [RelayCommand]
         private async Task OpenRecipeReport()
         {
             var rows = await BuildRecipeReport();
-            new ReportWindow("Отчёт по рецептурам", "recipe", rows).ShowDialog();
+            var window = new ReportWindow("Отчёт по рецептурам", "recipe", rows);
+            var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            await window.ShowDialog(desktop?.MainWindow);
+
         }
         [RelayCommand]
         private async Task OpenLabBlockReport()
         {
             var rows = await BuildLabBlockReport();
-            new ReportWindow("Лабораторные блокировки", "lab", rows).ShowDialog();
+            var window = new ReportWindow("Лабораторные блокировки", "lab", rows);
+            var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            await window.ShowDialog(desktop?.MainWindow);
         }
 
         [RelayCommand]
         private async Task OpenExtruderReport()
         {
             var rows = await BuildExtruderReport();
-            new ReportWindow("Отчёт по экструдеру", "extruder", rows).ShowDialog();
+            var window = new ReportWindow("Отчёт по экструдеру", "extruder", rows);
+            var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+            await window.ShowDialog(desktop?.MainWindow);
         }
         private async Task<List<BatchRecortRow>> BuildBatchReport()
         {

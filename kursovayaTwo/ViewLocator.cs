@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using kursovayaTwo.ViewModels;
+using kursovayaTwo.ViewModel;
 
 namespace kursovayaTwo
 {
@@ -32,7 +32,7 @@ namespace kursovayaTwo
 
         public bool Match(object? data)
         {
-            return data is ViewModelBase;
+            return data is MainWindowViewModel;
         }
     }
 }

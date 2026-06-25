@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using kursovayaTwo.Models;
 using kursovayaTwo.Services;
-using kursovayaTwo.Views.Windows;
+using kursovayaTwo.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,7 +49,9 @@ namespace kursovayaTwo.ViewModel
             try
             {
                 AddEditCardWindow window = new AddEditCardWindow(new TechCard());
-                if(window.ShowDialog() == true)
+                var mainWindow = (App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+                var result = await window.ShowDialog<bool?>(mainWindow);
+                if(result == true)
                 {
                     TechCard card = window.Card;
                     await service.AddCard(card);
@@ -63,7 +67,9 @@ namespace kursovayaTwo.ViewModel
         {
             TechCard card = (TechCard)param;
             AddEditCardWindow window = new AddEditCardWindow(card);
-            if(window.ShowDialog() == true)
+            var mainWindow = (App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+            var result = await window.ShowDialog<bool?>(mainWindow);
+            if (result == true)
             {
                 await service.EditCard(card);
                 Load();
@@ -75,7 +81,7 @@ namespace kursovayaTwo.ViewModel
             if(param is TechCard card)
             {
                 var window = new CardInfoWindow(card, this);
-                window.ShowDialog();
+                await window.ShowDialog((App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
             }
         }
         [RelayCommand]
@@ -83,13 +89,29 @@ namespace kursovayaTwo.ViewModel
         {
             if(param is TechCard card)
             {
-                //var result = MessageBox.Show("Вы уверены что хотите архивировать карту?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                //if(result == MessageBoxResult.Yes)
-                //{
-                //    await service.ArchiveCard(card);
-                //    Load();
-                //    Application.Current.Windows.OfType<CardInfoWindow>().FirstOrDefault()?.Close();
-                //}
+                var dialog = new Window
+                {
+                    Title = "Подтверждение",
+                    Width = 300,
+                    Height = 120,
+                    Content = new TextBlock
+                    {
+                        Text = "Архивировать Карту?",
+                        Margin = new Avalonia.Thickness(10)
+                    }
+                };
+                var result = false;
+                dialog.KeyDown += (_, e) =>
+                {
+                    if (e.Key == Avalonia.Input.Key.Enter) { result = true; dialog.Close(); }
+                    if (e.Key == Avalonia.Input.Key.Escape) { dialog.Close(); }
+                };
+                dialog.ShowDialog((App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
+                if (result)
+                {
+                    await service.ArchiveCard(card);
+                    Load();
+                }
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using kursovayaTwo.Models;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using kursovayaTwo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +31,12 @@ namespace kursovayaTwo.Services
                 if(responseText != null)
                 {
                     Product resp = JsonSerializer.Deserialize<Product>(responseText)!;
-                    if (resp == null) MessageBox.Show(responseText);
+                    if (resp == null) await ShowMessage(responseText);
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task EditProduct(Product product)
@@ -47,12 +49,12 @@ namespace kursovayaTwo.Services
                 if(responseText != null)
                 {
                     Product resp = JsonSerializer.Deserialize<Product>(responseText)!;
-                    if (resp == null) MessageBox.Show(responseText);
+                    if (resp == null) await ShowMessage(responseText);
                 }
             }
             catch( Exception ex ) 
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task<Product> GetProduct(int id)
@@ -61,6 +63,23 @@ namespace kursovayaTwo.Services
             var product = await client.GetFromJsonAsync<Product>("http://localhost:5043/api/Product/" + id);
             if (product != null) return product;
             return null!;
+        }
+        private async Task ShowMessage(string text)
+        {
+            var window = new Window
+            {
+                Width = 300,
+                Height = 150,
+                Title = "Ошибка",
+                Content = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Avalonia.Thickness(10)
+                }
+
+            };
+            var owner = (App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow;
+            await window.ShowDialog(owner);
         }
     }
 }

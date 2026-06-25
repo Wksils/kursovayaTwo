@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Data.Converters;
-using System.Windows.Media;
+using Avalonia.Media;
 
 namespace kursovayaTwo.Converters
 {

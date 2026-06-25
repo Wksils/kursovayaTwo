@@ -1,0 +1,98 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:conv="clr-namespace:kursovayaTwo.Converters"
+        x:Class="kursovayaTwo.View.Windows.RecipeInfo"
+        Width="600"
+        Height="550"
+        Title="RecipeInfo">
+
+	<Window.Resources>
+		<conv:IdToFio x:Key="IdToFio"/>
+		<conv:IdToProductName x:Key="ProductName"/>
+		<conv:IdToUomName x:Key="UomName"/>
+	</Window.Resources>
+
+	<Grid RowDefinitions="3*,3*,Auto">
+ 
+		<Grid Grid.Row="0"
+              ColumnDefinitions="*,*,*"
+              RowDefinitions="Auto,Auto,Auto">
+
+			<StackPanel Grid.Column="0" Grid.Row="0">
+				<TextBlock Text="Продукт"/>
+				<TextBlock Text="{Binding Recipe.ProductId, Converter={StaticResource ProductName}}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Grid.Row="0">
+				<TextBlock Text="Версия р-ры"/>
+				<TextBlock Text="{Binding Recipe.Version}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="2" Grid.Row="0">
+				<TextBlock Text="Статус"/>
+				<TextBlock Text="{Binding Recipe.Status}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="0" Grid.Row="1">
+				<TextBlock Text="Кем подтверждена"/>
+				<TextBlock Text="{Binding Recipe.ApprovedBy, Converter={StaticResource IdToFio}}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Grid.Row="1">
+				<TextBlock Text="Когда подтверждена"/>
+				<TextBlock Text="{Binding Recipe.ApprovedAt}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
+				<TextBlock Text="Заметка"/>
+				<TextBlock Text="{Binding Recipe.Notes}" TextWrapping="Wrap"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="0" Grid.Row="2">
+				<TextBlock Text="Кто создал"/>
+				<TextBlock Text="{Binding Recipe.CreatedBy, Converter={StaticResource IdToFio}}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Grid.Row="2">
+				<TextBlock Text="Когда создана"/>
+				<TextBlock Text="{Binding Recipe.CreatedAt}"/>
+			</StackPanel>
+
+		</Grid>
+ 
+		<ListBox Grid.Row="1"
+                 ItemsSource="{Binding Components}"
+                 Margin="10">
+
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid ColumnDefinitions="100,100,100,100,140,100">
+
+						<TextBlock Grid.Column="0" Text="{Binding MaterialId}"/>
+						<TextBlock Grid.Column="1" Text="{Binding Quantity}"/>
+						<TextBlock Grid.Column="2" Text="{Binding UomId, Converter={StaticResource UomName}}"/>
+						<TextBlock Grid.Column="3" Text="{Binding Percentage}"/>
+						<TextBlock Grid.Column="4" Text="{Binding IsCritical}"/>
+
+						<Button Grid.Column="5">
+							<Image Source="/Resources/edit.png"/>
+						</Button>
+
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+
+		</ListBox>
+ 
+		<Button Grid.Row="2"
+                Width="100"
+                Height="25"
+                Margin="10"
+                Content="Архивировать"
+                Background="#FF7676FF"
+                Foreground="White"
+                HorizontalAlignment="Left"
+                Click="Button_Click"/>
+
+	</Grid>
+</Window>

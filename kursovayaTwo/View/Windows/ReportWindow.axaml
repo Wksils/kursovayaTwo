@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="kursovayaTwo.View.Windows.ReportWindow"
+        Width="800" Height="450"
+        Title="ReportWindow">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <DataGrid x:Name="dataGrid"
+                  Grid.Row="0"
+                  Margin="10"
+                  AutoGenerateColumns="True"
+                  IsReadOnly="True"/>
+
+        <Button Grid.Row="1"
+                Content="Экспорт CSV"
+                Width="120"
+                Height="30"
+                Margin="10"
+                HorizontalAlignment="Right"
+                Background="#FF7676FF"
+                Foreground="White"
+                Click="Export_Click"/>
+    </Grid>
+</Window>

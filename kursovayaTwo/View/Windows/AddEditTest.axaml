@@ -1,0 +1,124 @@
+<Window
+    x:Class="kursovayaTwo.View.Windows.AddEditTest"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    Title="AddEditTest"
+    Width="500"
+    Height="700">
+
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<Grid Margin="10">
+
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition Height="2*"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+ 
+			<StackPanel Grid.Row="0">
+				<TextBlock Text="Тип испытания*"/>
+				<ComboBox SelectedItem="{Binding EditCopy.TestType}">
+					<sys:String>incoming</sys:String>
+					<sys:String>in_process</sys:String>
+					<sys:String>final</sys:String>
+				</ComboBox>
+			</StackPanel>
+ 
+			<StackPanel Grid.Row="1">
+				<TextBlock Text="Дата и время назначения"/>
+				<DatePicker SelectedDate="{Binding EditCopy.CreatedAt}" Margin="5"/>
+			</StackPanel>
+ 
+			<StackPanel Grid.Row="2">
+				<TextBlock Text="Исполнитель*"/>
+
+				<ComboBox ItemsSource="{Binding $parent[Window].Users}"
+                          SelectedValue="{Binding EditCopy.AssignedTo}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding FullName}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+			</StackPanel>
+ 
+			<StackPanel Grid.Row="3">
+				<TextBlock Text="Приоритет*"/>
+				<ComboBox SelectedItem="{Binding EditCopy.Priority}">
+					<sys:String>low</sys:String>
+					<sys:String>normal</sys:String>
+					<sys:String>high</sys:String>
+					<sys:String>urgent</sys:String>
+				</ComboBox>
+			</StackPanel>
+ 
+			<StackPanel Grid.Row="4">
+				<TextBlock Text="Статус*"/>
+				<ComboBox SelectedItem="{Binding EditCopy.Status}">
+					<sys:String>pending</sys:String>
+					<sys:String>in_progress</sys:String>
+					<sys:String>completed</sys:String>
+					<sys:String>cancelled</sys:String>
+				</ComboBox>
+			</StackPanel>
+ 
+			<StackPanel Grid.Row="5">
+				<TextBlock Text="Дата начала"/>
+				<DatePicker SelectedDate="{Binding EditCopy.StartedAt}" Margin="5"/>
+			</StackPanel>
+
+			<StackPanel Grid.Row="6">
+				<TextBlock Text="Дата завершения"/>
+				<DatePicker SelectedDate="{Binding EditCopy.CompletedAt}" Margin="5"/>
+			</StackPanel>
+ 
+			<StackPanel Grid.Row="7">
+
+				<TextBlock Text="Контролируемые параметры*"/>
+				<TextBox Text="{Binding EditCopy.ControlledParameters}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         Height="50"/>
+
+				<TextBlock Text="Комментарий" Margin="0,5,0,0"/>
+				<TextBox Text="{Binding EditCopy.Comment}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         Height="40"/>
+
+				<TextBlock Text="Результаты испытания" Margin="0,5,0,0"/>
+				<TextBox Text="{Binding EditCopy.ResultsText}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         Height="40"/>
+
+				<TextBlock Text="Итоговый результат" Margin="0,5,0,0"/>
+
+				<ComboBox SelectedItem="{Binding EditCopy.OverallResult}">
+					<sys:String>pass</sys:String>
+					<sys:String>fail</sys:String>
+				</ComboBox>
+
+			</StackPanel>
+
+			
+			<StackPanel Grid.Row="8" Orientation="Horizontal">
+				<Button x:Name="btn"
+                        Width="120"
+                        Height="28"
+                        Margin="5"
+                        Background="#7676FF"
+                        Foreground="White"
+                        Click="Button_ClickAsync"/>
+			</StackPanel>
+
+		</Grid>
+	</ScrollViewer>
+</Window>

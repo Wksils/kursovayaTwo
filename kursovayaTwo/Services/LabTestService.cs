@@ -1,4 +1,6 @@
-﻿using kursovayaTwo.Models;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using kursovayaTwo.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -29,12 +31,12 @@ namespace kursovayaTwo.Services
                 if(responseText != null)
                 {
                     LabTests resp = JsonSerializer.Deserialize<LabTests>(responseText)!;
-                    if (resp == null) MessageBox.Show(responseText);
+                    if (resp == null) await ShowMessage(responseText);
                 }
             }
             catch(Exception ex) 
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task EditTest(LabTests test)
@@ -47,13 +49,30 @@ namespace kursovayaTwo.Services
                 if (responseText != null)
                 {
                     LabTests resp = JsonSerializer.Deserialize<LabTests>(responseText)!;
-                    if(resp == null)MessageBox.Show(responseText);
+                    if(resp == null)await ShowMessage(responseText);
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
+        }
+        private async Task ShowMessage(string text)
+        {
+            var window = new Window
+            {
+                Width = 300,
+                Height = 150,
+                Title = "Ошибка",
+                Content = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Avalonia.Thickness(10)
+                }
+
+            };
+            var owner = (App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow;
+            await window.ShowDialog(owner);
         }
     }
 }

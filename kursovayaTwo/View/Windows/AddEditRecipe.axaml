@@ -1,0 +1,139 @@
+<Window
+    x:Class="kursovayaTwo.View.Windows.AddEditRecipe"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    xmlns:conv="using:kursovayaTwo.Converters"
+    Title="AddEditRecipe"
+    Width="600"
+    Height="250">
+
+	<Window.Resources>
+		<conv:IdToFio x:Key="IdToFio"/>
+		<conv:IdToProductName x:Key="ProductName"/>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Column="0" Grid.Row="0">
+			<TextBlock Margin="10,0" Text="Продукт"/>
+
+			<ComboBox Margin="10"
+                      Background="#EDEDED"
+                      ItemsSource="{Binding $parent[Window].Products}"
+                      SelectedValue="{Binding ProductId}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+		</StackPanel>
+
+		<StackPanel Grid.Column="1" Grid.Row="0">
+			<TextBlock Margin="10,0" Text="Версия р-ры"/>
+
+			<TextBox Margin="10"
+                     Background="#EDEDED"
+                     Text="{Binding Version}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Column="2" Grid.Row="0">
+			<TextBlock Margin="10,0" Text="Статус"/>
+
+			<ComboBox Margin="10"
+                      Background="#EDEDED"
+                      SelectedItem="{Binding Status}">
+				<sys:String>draft</sys:String>
+				<sys:String>approved</sys:String>
+			</ComboBox>
+		</StackPanel>
+
+		<StackPanel Grid.Column="0" Grid.Row="1">
+			<TextBlock Margin="10,0" Text="Кем подтверждена"/>
+
+			<ComboBox Margin="10"
+                      x:Name="ApprovedBy"
+                      Background="#EDEDED"
+                      ItemsSource="{Binding $parent[Window].Users}"
+                      SelectedValue="{Binding ApprovedBy}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding FullName}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+		</StackPanel>
+
+		<StackPanel Grid.Column="1" Grid.Row="1">
+			<TextBlock Margin="10,0" Text="Когда подтверждена"/>
+
+			<DatePicker Margin="10"
+                        Background="#EDEDED"
+                        SelectedDate="{Binding ApprovedAt}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Column="2"
+                    Grid.Row="1"
+                    Grid.RowSpan="2">
+
+			<TextBlock Margin="10,0" Text="Заметка"/>
+
+			<TextBox Height="110"
+                     Margin="10,0"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     Background="#EDEDED"
+                     Text="{Binding Notes}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Column="0" Grid.Row="2">
+			<TextBlock Margin="10,0" Text="Кто создал"/>
+
+			<ComboBox Margin="10"
+                      x:Name="CreatedBy"
+                      Background="#EDEDED"
+                      ItemsSource="{Binding $parent[Window].Users}"
+                      SelectedValue="{Binding CreatedBy}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding FullName}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+		</StackPanel>
+
+		<StackPanel Grid.Column="1" Grid.Row="2">
+			<TextBlock Margin="10,0" Text="Когда создана"/>
+
+			<DatePicker Margin="10"
+                        Background="#EDEDED"
+                        SelectedDate="{Binding CreatedAt}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Row="3"
+                    Orientation="Horizontal">
+
+			<Button x:Name="btn"
+                    Width="100"
+                    Height="25"
+                    Margin="10"
+                    Background="#7676FF"
+                    Foreground="White"
+                    Click="btn_Click"/>
+		</StackPanel>
+
+	</Grid>
+</Window>

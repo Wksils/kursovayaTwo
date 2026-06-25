@@ -1,0 +1,96 @@
+<Window
+    x:Class="kursovayaTwo.View.Windows.MaterialBatchInfo"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="using:kursovayaTwo.Converters"
+    Title="MaterialBatchInfo"
+    Width="800"
+    Height="450"
+    Background="White">
+
+	<Window.Resources>
+		<conv:IdToFio x:Key="IdToFio"/>
+	</Window.Resources>
+
+	<StackPanel>
+
+		<TextBlock Text="Лабораторное решение"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Margin="10"/>
+
+		<Grid Margin="10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<StackPanel Grid.Column="0">
+				<TextBlock Text="Текущий статус" FontWeight="Bold"/>
+				<TextBlock Text="{Binding Batch.QaDecision}"/>
+
+				<TextBlock Text="Дата решения"
+                           FontWeight="Bold"
+                           Margin="0,8,0,0"/>
+
+				<TextBlock Text="{Binding Batch.DecisionAt}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="1">
+				<TextBlock Text="Принял решение" FontWeight="Bold"/>
+
+				<TextBlock Text="{Binding Batch.DecisionBy, Converter={StaticResource IdToFio}}"/>
+
+				<TextBlock Text="Комментарий"
+                           FontWeight="Bold"
+                           Margin="0,8,0,0"/>
+
+				<TextBlock Text="{Binding Batch.DecisionComment}"
+                           TextWrapping="Wrap"/>
+			</StackPanel>
+
+		</Grid>
+
+		<TextBlock Text="Принять решение"
+                   FontWeight="Bold"
+                   Margin="10,0"/>
+
+		<ComboBox x:Name="decisionTypeBox"
+                  Width="220"
+                  HorizontalAlignment="Left"
+                  Margin="10">
+
+			<ComboBoxItem Content="Разрешить использование"
+                          Tag="approved"/>
+
+			<ComboBoxItem Content="Заблокировать"
+                          Tag="rejected"/>
+		</ComboBox>
+
+		<TextBlock Text="Комментарий"
+                   Margin="10"/>
+
+		<TextBox x:Name="commentBox"
+                 Height="50"
+                 TextWrapping="Wrap"
+                 Margin="10,0"/>
+
+		<TextBlock Text="Причина блокировки (если применимо)"
+                   Margin="0,10,0,5"/>
+
+		<TextBox x:Name="reasonBox"
+                 Height="40"
+                 TextWrapping="Wrap"
+                 Margin="10"/>
+
+		<Button Content="Подтвердить решение"
+                Width="180"
+                Height="30"
+                Margin="10,5"
+                Background="#7676FF"
+                Foreground="White"
+                HorizontalAlignment="Left"
+                Click="ConfirmDecision_ClickAsync"/>
+
+	</StackPanel>
+</Window>

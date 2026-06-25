@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using kursovayaTwo.Models;
 using kursovayaTwo.Services;
-using kursovayaTwo.Views.Windows;
+using kursovayaTwo.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -69,7 +71,7 @@ namespace kursovayaTwo.ViewModel
         };
         private void Load()
         {
-            //Recipes = new ObservableCollection<Recipe>(getRecipes());
+            Recipes = new ObservableCollection<Recipe>(getRecipes());
             var recipes = getRecipes();
             allRecipe = recipes;
             Recipes = new ObservableCollection<Recipe>(recipes);
@@ -91,7 +93,9 @@ namespace kursovayaTwo.ViewModel
             try
             {
                 AddEditRecipe window = new AddEditRecipe(new Recipe());
-                if(window.ShowDialog() == true)
+                var mainWindow = (App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+                var result = await window.ShowDialog<bool?>(mainWindow);
+                if (result == true)
                 {
                     Recipe recipe = window.Recipe;
                     await recipeService.AddRecipe(recipe);
@@ -107,7 +111,9 @@ namespace kursovayaTwo.ViewModel
         {
             Recipe recipe = (Recipe)param;
             AddEditRecipe window = new AddEditRecipe(recipe);
-            if(window.ShowDialog() == true)
+            var mainWindow = (App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+            var result = await window.ShowDialog<bool?>(mainWindow);
+            if (result == true)
             {
                 await recipeService.EditRecipe(recipe);
                 Load();
@@ -119,7 +125,7 @@ namespace kursovayaTwo.ViewModel
             if(param is Recipe recipe)
             {
                 var window = new RecipeInfo(recipe, this);
-                window.ShowDialog();
+                await window.ShowDialog((App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
             }
         }
         [RelayCommand]
@@ -127,13 +133,29 @@ namespace kursovayaTwo.ViewModel
         {
             if(param is Recipe recipe)
             {
-                var result = MessageBox.Show("Вы уверены что хотите архивировать рецептуру?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                if(result == MessageBoxResult.Yes)
+                var dialog = new Window
+                {
+                    Title = "Подтверждение",
+                    Width = 300,
+                    Height = 120,
+                    Content = new TextBlock
+                    {
+                        Text = "Архивировать рецептуру?",
+                        Margin = new Avalonia.Thickness(10)
+
+                    }
+                };
+                var result = false;
+                dialog.KeyDown += (_, e) =>
+                {
+                    if(e.Key == Avalonia.Input.Key.Enter) { result = true; dialog.Close(); }
+                    if(e.Key == Avalonia.Input.Key.Escape) { dialog.Close(); }
+                };
+                dialog.ShowDialog((App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
+                if (result)
                 {
                     await recipeService.Archive(recipe);
                     Load();
-                    Application.Current.Windows.OfType<RecipeInfo>().FirstOrDefault()?.Close();
-                    
                 }
             }
         }

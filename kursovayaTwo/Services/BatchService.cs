@@ -1,4 +1,6 @@
-﻿using kursovayaTwo.Models;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using kursovayaTwo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +30,12 @@ namespace kursovayaTwo.Services
                 if(responseText != null)
                 {
                     MaterialBatch resp = JsonSerializer.Deserialize<MaterialBatch>(responseText)!;
-                    if (resp == null) MessageBox.Show(responseText);
+                    if (resp == null) await ShowMessage(responseText);
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task EditBatch(MaterialBatch batch)
@@ -46,12 +48,12 @@ namespace kursovayaTwo.Services
                 if(responseText != null)
                 {
                     MaterialBatch resp = JsonSerializer.Deserialize<MaterialBatch>(responseText)!;
-                    if (resp == null) MessageBox.Show(responseText);
+                    if (resp == null) await ShowMessage(responseText);
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task<RawMaterial> GetMaterial(int id)
@@ -59,6 +61,23 @@ namespace kursovayaTwo.Services
             var material = await client.GetFromJsonAsync<RawMaterial>("http://localhost:5043/api/RawMaterial/" + id);
             if (material != null) return material;
             return null!;
+        }
+        private async Task ShowMessage(string text)
+        {
+            var window = new Window
+            {
+                Width = 300,
+                Height = 150,
+                Title = "Ошибка",
+                Content = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Avalonia.Thickness(10)
+                }
+
+            };
+            var owner = (App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow;
+            await window.ShowDialog(owner);
         }
     }
 }

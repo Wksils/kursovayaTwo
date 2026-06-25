@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using kursovayaTwo.Models;
 using kursovayaTwo.Services;
-using kursovayaTwo.Views.Windows;
+using kursovayaTwo.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -116,7 +118,9 @@ namespace kursovayaTwo.ViewModel
         {
             Product product = (Product)param;
             AddEditProduct window = new AddEditProduct(product);
-            if (window.ShowDialog() == true)
+            var mainWindow = (App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+            var result = await window.ShowDialog<bool?>(mainWindow);
+            if (result == true)
             {
                 await ProductService.EditProduct(product);
                 Load();
@@ -128,7 +132,9 @@ namespace kursovayaTwo.ViewModel
             try
             {
                 AddEditProduct window = new AddEditProduct(new Product());
-                if (window.ShowDialog() == true)
+                var mainWindow = (App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+                var result = await window.ShowDialog<bool?>(mainWindow);
+                if (result == true)
                 {
                     Product product = window.Product;
                     await ProductService.AddProduct(product);
@@ -146,7 +152,7 @@ namespace kursovayaTwo.ViewModel
             if (param is ProductRow row)
             {
                 var window = new ProductWindow(row, this);
-                window.ShowDialog();
+                await window.ShowDialog((App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
             }
         }
         [RelayCommand]
@@ -154,20 +160,30 @@ namespace kursovayaTwo.ViewModel
         {
             if (param is Product product)
             {
-                //var result = MessageBox.Show(
-                //    $"Вы уверены что хотите архивировать \"{product.Name}\"?",
-                //    "Подтверждение",
-                //    MessageBoxButton.YesNo,
-                //    MessageBoxImage.Warning);
+                var dialog = new Window
+                {
+                    Title = "Подтверждение",
+                    Width = 300,
+                    Height = 120,
+                    Content = new TextBlock
+                    {
+                        Text = "Архивировать Продукт?",
+                        Margin = new Avalonia.Thickness(10)
 
-                //if (result == MessageBoxResult.Yes)
-                //{
-                //    await listsService.ArchiveProduct(product);
-                //    Application.Current.Windows
-                //        .OfType<ProductWindow>()
-                //        .FirstOrDefault()?.Close();
-                //    Load();
-                //}
+                    }
+                };
+                var result = false;
+                dialog.KeyDown += (_, e) =>
+                {
+                    if (e.Key == Avalonia.Input.Key.Enter) { result = true; dialog.Close(); }
+                    if (e.Key == Avalonia.Input.Key.Escape) { dialog.Close(); }
+                };
+                dialog.ShowDialog((App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow);
+                if (result)
+                {
+                    await listsService.ArchiveProduct(product);
+                    Load();
+                }
             }
         }
     }

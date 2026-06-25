@@ -1,0 +1,126 @@
+<Window
+    x:Class="kursovayaTwo.View.Windows.CardInfoWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="using:kursovayaTwo.Converters"
+    Title="CardInfoWindow"
+    Width="850"
+    Height="550">
+
+	<Window.Resources>
+		<conv:IdToFio x:Key="IdToFio"/>
+		<conv:IdToProductName x:Key="ProductName"/>
+		<conv:IdToUomName x:Key="UomName"/>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="3*"/>
+			<RowDefinition Height="3*"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+ 
+		<Grid Grid.Row="0">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition/>
+				<RowDefinition Height="40"/>
+			</Grid.RowDefinitions>
+ 
+			<Button Grid.Row="3"
+                    Grid.Column="2"
+                    Width="30"
+                    Height="30"
+                    Content="+"
+                    Background="Transparent"
+                    FontSize="20"/>
+
+			<StackPanel Grid.Column="0" Grid.Row="0">
+				<TextBlock Margin="10,0" Text="Продукт"/>
+				<TextBlock Margin="10"
+                           Text="{Binding TechCard.ProductId}"
+                           />
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Grid.Row="0">
+				<TextBlock Margin="10,0" Text="Версия р-ры"/>
+				<TextBlock Margin="10" Text="{Binding TechCard.Version}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="2" Grid.Row="0">
+				<TextBlock Margin="10,0" Text="Статус"/>
+				<TextBlock Margin="10" Text="{Binding TechCard.Status}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="0" Grid.Row="1">
+				<TextBlock Margin="10,0" Text="Кем подтверждена"/>
+				<TextBlock Margin="10"
+                           Text="{Binding TechCard.ApprovedBy, Converter={StaticResource IdToFio}}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Grid.Row="1">
+				<TextBlock Margin="10,0" Text="Когда подтверждена"/>
+				<TextBlock Margin="10" Text="{Binding TechCard.ApprovedAt}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
+				<TextBlock Margin="10,0" Text="Заметка"/>
+				<TextBlock Height="110"
+                           Margin="10,0"
+                           TextWrapping="Wrap"
+                           Text="{Binding TechCard.Notes}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="0" Grid.Row="2">
+				<TextBlock Margin="10,0" Text="Кто создал"/>
+				<TextBlock Margin="10"
+                           Text="{Binding TechCard.CreatedBy, Converter={StaticResource IdToFio}}"/>
+			</StackPanel>
+
+			<StackPanel Grid.Column="1" Grid.Row="2">
+				<TextBlock Margin="10,0" Text="Когда создана"/>
+				<TextBlock Margin="10" Text="{Binding TechCard.CreatedAt}"/>
+			</StackPanel>
+
+		</Grid>
+ 
+		<ListBox Grid.Row="1"
+                 Margin="10"
+                 ItemsSource="{Binding Steps}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid ColumnDefinitions="100,100,150,100,120,150">
+
+						<TextBlock Grid.Column="0" Text="{Binding StepNumber}"/>
+						<TextBlock Grid.Column="1" Text="{Binding Name}"/>
+						<TextBlock Grid.Column="2" Text="{Binding Description}" TextWrapping="Wrap"/>
+						<TextBlock Grid.Column="3" Text="{Binding EquipmentId}"/>
+						<TextBlock Grid.Column="4" Text="{Binding DurationMin}"/>
+						<TextBlock Grid.Column="5" Text="{Binding ParamsNote}" TextWrapping="Wrap"/>
+
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		
+		<Button Grid.Row="2"
+                Width="100"
+                Height="25"
+                Margin="10"
+                Content="Архивировать"
+                Background="#7676FF"
+                Foreground="White"
+                HorizontalAlignment="Left"
+                Click="Button_Click"/>
+
+	</Grid>
+</Window>

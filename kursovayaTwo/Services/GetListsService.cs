@@ -1,4 +1,6 @@
-﻿using kursovayaTwo.Models;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using kursovayaTwo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,11 +64,11 @@ namespace kursovayaTwo.Services
                 var response = await client.PatchAsync("http://localhost:5043/api/Product/" + product.ProductId, null);
 
                 if (!response.IsSuccessStatusCode)
-                    MessageBox.Show("Ошибка архивации: " + response.StatusCode);
+                    await ShowMessage("Ошибка архивации: " + response.StatusCode);
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task<User> GetUser(int id)
@@ -128,6 +130,23 @@ namespace kursovayaTwo.Services
             var list = await client.GetFromJsonAsync<List<MaterialBatch>>("http://localhost:5043/api/MaterialBatch");
             if (list != null) return list;
             return null!;
+        }
+        private async Task ShowMessage(string text)
+        {
+            var window = new Window
+            {
+                Width = 300,
+                Height = 150,
+                Title = "Ошибка",
+                Content = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Avalonia.Thickness(10)
+                }
+
+            };
+            var owner = (App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow;
+            await window.ShowDialog(owner);
         }
     }
 }

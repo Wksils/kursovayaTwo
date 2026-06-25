@@ -1,4 +1,6 @@
-﻿using kursovayaTwo.Models;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using kursovayaTwo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +30,12 @@ namespace kursovayaTwo.Services
                 if(responseText != null)
                 {
                     TechCard resp = JsonSerializer.Deserialize<TechCard>(responseText)!;
-                    if (resp == null) MessageBox.Show(responseText);
+                    if (resp == null) await ShowMessage(responseText);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task EditCard(TechCard card)
@@ -46,12 +48,12 @@ namespace kursovayaTwo.Services
                 if(responseText != null)
                 {
                     TechCard resp = JsonSerializer.Deserialize<TechCard>(responseText)!;
-                    if (resp == null) MessageBox.Show(responseText);
+                    if (resp == null) await ShowMessage(responseText);
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task ArchiveCard(TechCard card)
@@ -60,17 +62,34 @@ namespace kursovayaTwo.Services
             {
                 var response = await client.PatchAsync("http://localhost:5043/api/TechCard/" + card.CardId, null);
                 if(!response.IsSuccessStatusCode)
-                    MessageBox.Show("Ошибка архивации: " + response.StatusCode);
+                    await ShowMessage("Ошибка архивации: " + response.StatusCode);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task<List<TechStep>> GetSteps(int id)
         {
             var list = await client.GetFromJsonAsync<List<TechStep>>("http://localhost:5043/api/TechStep/byCard/" + id);
             return list ?? new List<TechStep>();
+        }
+        private async Task ShowMessage(string text)
+        {
+            var window = new Window
+            {
+                Width = 300,
+                Height = 150,
+                Title = "Ошибка",
+                Content = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Avalonia.Thickness(10)
+                }
+
+            };
+            var owner = (App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow;
+            await window.ShowDialog(owner);
         }
     }
 }

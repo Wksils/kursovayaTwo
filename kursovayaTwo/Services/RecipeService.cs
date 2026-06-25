@@ -1,7 +1,8 @@
-﻿using kursovayaTwo.Models;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using kursovayaTwo.Models;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -28,15 +29,18 @@ namespace kursovayaTwo.Services
                 JsonContent content = JsonContent.Create(recipe);
                 var response = await client.PostAsync("http://localhost:5043/api/Recipe", content);
                 string responseText = await response.Content.ReadAsStringAsync();
-                if (responseText != null)
+                if(!string.IsNullOrWhiteSpace(responseText))
                 {
                     Recipe recipe1 = JsonSerializer.Deserialize<Recipe>(responseText)!;
-                    if (recipe1 == null) MessageBox.Show(responseText);
+                    if(recipe1 == null)
+                    {
+                        await ShowMessage(responseText);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task EditRecipe(Recipe recipe)
@@ -49,12 +53,12 @@ namespace kursovayaTwo.Services
                 if (responseText != null)
                 {
                     Recipe recipe1 = JsonSerializer.Deserialize<Recipe>(responseText)!;
-                    if (recipe1 == null) MessageBox.Show(responseText);
+                    if (recipe1 == null) await ShowMessage(responseText);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task Archive(Recipe recipe)
@@ -63,11 +67,11 @@ namespace kursovayaTwo.Services
             {
                 var response = await client.PatchAsync("http://localhost:5043/api/Recipe/" + recipe.RecipeId, null);
                 if (!response.IsSuccessStatusCode)
-                    MessageBox.Show("Ошибка архивации");
+                    await ShowMessage("Ошибка архивации");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                await ShowMessage(ex.Message);
             }
         }
         public async Task<List<RecipeComponent>> GetComponents(int id)
@@ -75,5 +79,25 @@ namespace kursovayaTwo.Services
             var list = await client.GetFromJsonAsync<List<RecipeComponent>>("http://localhost:5043/api/RecipeComponent/byRecipe/" + id);
             return list ?? new List<RecipeComponent>();
         }
+        private async Task ShowMessage(string text)
+        {
+            var window = new Window
+            {
+                Width = 300,
+                Height = 150,
+                Title = "Ошибка",
+                Content = new TextBlock
+                {
+                    Text = text,
+                    Margin = new Avalonia.Thickness(10)
+                }
+
+            };
+            var owner = (App.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime).MainWindow;
+            await window.ShowDialog(owner);
+        }
     }
+
 }
+
+

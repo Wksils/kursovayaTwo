@@ -1,0 +1,112 @@
+<Window
+    x:Class="kursovayaTwo.View.Windows.AddEditStep"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="using:kursovayaTwo.Converters"
+    Title="AddEditStep"
+    Width="800"
+    Height="450">
+
+	<Window.Resources>
+		<conv:IdToFio x:Key="IdToFio"/>
+		<conv:IdToProductName x:Key="ProductName"/>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+ 
+		<StackPanel Grid.Row="0" Grid.Column="0">
+			<TextBlock Margin="10,0" Text="Карта"/>
+
+			<ComboBox Margin="10"
+                      Background="#EDEDED"
+                      ItemsSource="{Binding $parent[Window].CardId}"
+                      SelectedItem="{Binding CardId}"/>
+		</StackPanel>
+ 
+		<StackPanel Grid.Row="0" Grid.Column="1">
+			<TextBlock Margin="10,0" Text="Номер шага"/>
+			<TextBox Margin="10"
+                     Background="#EDEDED"
+                     Text="{Binding StepNumber}"/>
+		</StackPanel>
+ 
+		<StackPanel Grid.Row="0" Grid.Column="2">
+			<TextBlock Margin="10,0" Text="Название шага"/>
+			<TextBox Margin="10"
+                     Background="#EDEDED"
+                     Text="{Binding Name}"/>
+		</StackPanel>
+ 
+		<StackPanel Grid.Row="1" Grid.Column="0">
+			<TextBlock Margin="10,0" Text="Оборудование"/>
+
+			<ComboBox Margin="10"
+                      Background="#EDEDED"
+                      ItemsSource="{Binding $parent[Window].Equipment}"
+                      SelectedValue="{Binding EquipmentId}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+		</StackPanel>
+ 
+		<StackPanel Grid.Row="1" Grid.Column="1">
+			<TextBlock Margin="10,0" Text="Длительность(мин)"/>
+			<TextBox Margin="10"
+                     Background="#EDEDED"
+                     Text="{Binding DurationMin}"/>
+		</StackPanel>
+ 
+		<StackPanel Grid.Row="2" Grid.ColumnSpan="3">
+			<TextBlock Margin="10,0" Text="Описание шага"/>
+			<TextBox Margin="10,0"
+                     Height="110"
+                     TextWrapping="Wrap"
+                     Background="#EDEDED"
+                     Text="{Binding Description}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Row="3" Grid.ColumnSpan="3">
+			<TextBlock Margin="10,0" Text="Заметка"/>
+			<TextBox Margin="10,5"
+                     Height="50"
+                     TextWrapping="Wrap"
+                     Background="#EDEDED"
+                     Text="{Binding ParamsNote}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Row="4" Grid.Column="2">
+			<CheckBox Content="Критический шаг"
+                      Margin="0,30"
+                      IsChecked="{Binding IsCritical}"
+                      Checked="CheckBox_Checked"
+                      Unchecked="CheckBox_Unchecked"/>
+		</StackPanel>
+
+		<StackPanel Grid.Row="4" Orientation="Horizontal">
+			<Button x:Name="btn"
+                    Width="100"
+                    Height="25"
+                    Margin="10"
+                    Background="#7676FF"
+                    Foreground="White"
+                    Click="btn_Click"/>
+		</StackPanel>
+
+	</Grid>
+</Window>
