@@ -140,9 +140,7 @@
 
 			<CheckBox x:Name="ch1"
                       Content="Сделать активной"
-                      IsChecked="{Binding IsActive}"
-                      Checked="CheckBox_Checked"
-                      Unchecked="CheckBox_Unchecked"/>
+                      IsChecked="{Binding IsActive}"/>
 		</StackPanel>
 
 	</Grid>

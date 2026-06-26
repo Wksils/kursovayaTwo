@@ -33,6 +33,8 @@ namespace kursovayaTwo.ViewModel
         private ObservableCollection<MaterialBatch> batchRows;
         [ObservableProperty]
         private int? selectedMaterialId;
+        [ObservableProperty]
+        private RawMaterial? selectedMaterial;
         public BatchViewModel()
         {
             listsService = new GetListsService();
@@ -83,6 +85,10 @@ namespace kursovayaTwo.ViewModel
                     return mat != null && checkedCategories.Contains(mat.Category);
                 });
             BatchRows = new ObservableCollection<MaterialBatch>(filtered.ToList());
+        }
+        partial void OnSelectedMaterialChanged(RawMaterial? value)
+        {
+            SelectedMaterialId = value?.MaterialId;
         }
         [RelayCommand]
         private void ToggleFilter()

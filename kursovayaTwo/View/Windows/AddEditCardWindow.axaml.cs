@@ -19,6 +19,7 @@ public partial class AddEditCardWindow : Window
     private TechCard cardCopy;
 
     private readonly GetListsService service;
+    public bool IsActive { get; set; }
 
     public AddEditCardWindow(TechCard card)
     {
@@ -41,7 +42,7 @@ public partial class AddEditCardWindow : Window
         };
 
         service = new GetListsService();
-
+        Card.IsActive = cardCopy.IsActive;
         Users = Task.Run(() => service.GetAllUsers()).Result;
         Products = Task.Run(() => service.GetProducts()).Result;
 
@@ -52,7 +53,7 @@ public partial class AddEditCardWindow : Window
         ch1.IsVisible = Card.CardId != null;
 
         DataContext = cardCopy;
-
+        
         _ = Load();
     }
 
@@ -77,13 +78,6 @@ public partial class AddEditCardWindow : Window
         Close(true);
     }
 
-    private void CheckBox_Checked(object? sender, RoutedEventArgs e)
-    {
-        cardCopy.IsActive = true;
-    }
+    
 
-    private void CheckBox_Unchecked(object? sender, RoutedEventArgs e)
-    {
-        cardCopy.IsActive = false;
-    }
 }

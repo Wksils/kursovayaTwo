@@ -4,15 +4,33 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\content_paste.png" />
+    <None Remove="Resources\edit.png" />
+    <None Remove="Resources\extruder.png" />
+    <None Remove="Resources\file_blank_fill.png" />
+    <None Remove="Resources\filter.png" />
+    <None Remove="Resources\home_fill.png" />
+    <None Remove="Resources\ic_account_balance_wallet_48px.png" />
+    <None Remove="Resources\ic_local_shipping_48px.png" />
+    <None Remove="Resources\ic_query_builder_48px.png" />
+    <None Remove="Resources\library_books.png" />
+    <None Remove="Resources\logo.png" />
+    <None Remove="Resources\tag.png" />
+    <None Remove="Resources\testIcon.png" />
+    <None Remove="Resources\Vector-1.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="12.0.5" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.1" />
     <PackageReference Include="Avalonia.Desktop" Version="12.0.5" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.5" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.5" />
@@ -21,5 +39,22 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Resources\content_paste.png" />
+    <AvaloniaResource Include="Resources\edit.png" />
+    <AvaloniaResource Include="Resources\extruder.png" />
+    <AvaloniaResource Include="Resources\file_blank_fill.png" />
+    <AvaloniaResource Include="Resources\filter.png" />
+    <AvaloniaResource Include="Resources\home_fill.png" />
+    <AvaloniaResource Include="Resources\ic_account_balance_wallet_48px.png" />
+    <AvaloniaResource Include="Resources\ic_local_shipping_48px.png" />
+    <AvaloniaResource Include="Resources\ic_query_builder_48px.png" />
+    <AvaloniaResource Include="Resources\library_books.png" />
+    <AvaloniaResource Include="Resources\logo.png" />
+    <AvaloniaResource Include="Resources\tag.png" />
+    <ApplicationDefinition Include="Resources\testIcon.png" />
+    <AvaloniaResource Include="Resources\Vector-1.png" />
   </ItemGroup>
 </Project>

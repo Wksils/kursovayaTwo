@@ -42,7 +42,7 @@ namespace kursovayaTwo.ViewModel
             var rows = await BuildBatchReport();
             var window = new ReportWindow("Отчёты по партиям", "batch", rows);
             var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
-            await window.ShowDialog(desktop?.MainWindow);
+            await window.ShowDialog(desktop?.MainWindow!);
         }
         [RelayCommand]
         private async Task OpenDeviationReport()

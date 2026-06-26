@@ -93,9 +93,7 @@
 		<StackPanel Grid.Row="4" Grid.Column="2">
 			<CheckBox Content="Критический шаг"
                       Margin="0,30"
-                      IsChecked="{Binding IsCritical}"
-                      Checked="CheckBox_Checked"
-                      Unchecked="CheckBox_Unchecked"/>
+                      IsChecked="{Binding IsCritical}"/>
 		</StackPanel>
 
 		<StackPanel Grid.Row="4" Orientation="Horizontal">

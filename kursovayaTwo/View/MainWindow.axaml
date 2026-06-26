@@ -99,7 +99,10 @@
 
 				<Button Command="{Binding HomePageCommand}">
 					<DockPanel>
-						<Image Source="avares://kursovayaTwo/Resources/home_fill.png"/>
+						<Image 
+							Width="30"
+						Height="25"
+						Source="avares://kursovayaTwo/Resources/home_fill.png"/>
 						<TextBlock Text="Главная"/>
 					</DockPanel>
 				</Button>
@@ -108,7 +111,9 @@
 
 				<Button Command="{Binding ProductionPageCommand}">
 					<DockPanel>
-						<Image Source="avares://kursovayaTwo/Resources/tag.png"/>
+						<Image Width="30"
+						Height="25"
+					Source="avares://kursovayaTwo/Resources/tag.png"/>
 						<TextBlock Text="Продукция"/>
 					</DockPanel>
 				</Button>
@@ -117,7 +122,10 @@
 
 				<Button Command="{Binding RecipesRageCommand}">
 					<DockPanel>
-						<Image Source="avares://kursovayaTwo/Resources/content_paste.png"/>
+						<Image
+						Width="30"
+						Height="25"		
+					Source="avares://kursovayaTwo/Resources/content_paste.png"/>
 						<TextBlock Text="Рецептуры"/>
 					</DockPanel>
 				</Button>
@@ -126,7 +134,10 @@
 
 				<Button Command="{Binding CardPageCommand}">
 					<DockPanel>
-						<Image Source="avares://kursovayaTwo/Resources/library_books.png"/>
+						<Image 
+						Width="30"
+						Height="25"	
+						Source="avares://kursovayaTwo/Resources/library_books.png"/>
 						<TextBlock Text="Техкарты"/>
 					</DockPanel>
 				</Button>
@@ -135,7 +146,10 @@
 
 				<Button Command="{Binding BatchPageCommand}">
 					<DockPanel>
-						<Image Source="avares://kursovayaTwo/Resources/ic_local_shipping_48px.png"/>
+						<Image 
+							Width="30"
+						Height="25"
+					Source="avares://kursovayaTwo/Resources/ic_local_shipping_48px.png"/>
 						<TextBlock Text="Партии"/>
 					</DockPanel>
 				</Button>
@@ -144,7 +158,10 @@
 
 				<Button Command="{Binding ReportRageCommand}">
 					<DockPanel>
-						<Image Source="avares://kursovayaTwo/Resources/file_blank_fill.png"/>
+						<Image 
+					Width="30"
+						Height="25"		
+					Source="avares://kursovayaTwo/Resources/file_blank_fill.png"/>
 						<TextBlock Text="Отчеты"/>
 					</DockPanel>
 				</Button>

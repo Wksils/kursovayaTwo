@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using kursovayaTwo.Models;
 using kursovayaTwo.Services;
@@ -46,11 +47,16 @@ namespace kursovayaTwo.ViewModel
             Responce response = await service.SignIn(user);
             if (response != null)
             {
-                MainWindow main = new MainWindow();
-                main.Show();
-                window.Close();
+                var desktop = App.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+                if (desktop == null) return;
+
+                var mainWindow = new MainWindow();
+                mainWindow.Show();
+                var oldMainWindow = desktop.MainWindow;
+                desktop.MainWindow = mainWindow;
+                oldMainWindow?.Close();
             }
-           // else MessageBox.Show("Неверный логин или пароль");
+            //else MessageBox.Show("Неверный логин или пароль");
         }
     }
 }

@@ -61,11 +61,16 @@
                            Margin="10,0"/>
 
 				<ComboBox Margin="10"
-                          Background="#FFEDEDED"
-                          ItemsSource="{Binding Materials}"
-                          DisplayMemberPath="Name"
-                          SelectedValuePath="MaterialId"
-                          SelectedValue="{Binding EditCopy.MaterialId}"/>
+					Background="#FFEDEDED"
+					ItemsSource="{Binding Materials}"
+					SelectedItem="{Binding SelectedMaterial}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+
+				</ComboBox>
 
 			</StackPanel>
 
@@ -154,10 +159,15 @@
                                Margin="10,0"/>
 
 					<ComboBox Margin="10"
-                              ItemsSource="{Binding Uom}"
-                              DisplayMemberPath="Name"
-                              SelectedValuePath="UomId"
-                              SelectedValue="{Binding EditCopy.UomId}"/>
+						ItemsSource="{Binding Uom}"
+						SelectedItem="{Binding SelectedUom}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Name}"/>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+
+					</ComboBox>
 
 				</StackPanel>
 

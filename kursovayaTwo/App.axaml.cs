@@ -6,6 +6,7 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using kursovayaTwo.ViewModel;
 using kursovayaTwo.View;
+using Avalonia.Controls;
 
 namespace kursovayaTwo
 {
@@ -18,13 +19,11 @@ namespace kursovayaTwo
 
         public override void OnFrameworkInitializationCompleted()
         {
-            //if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            //{
-            //    desktop.MainWindow = new MainWindow
-            //    {
-            //        DataContext = new MainWindowViewModel(),
-            //    };
-            //}
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                desktop.MainWindow = new LoginViews();
+            }
 
             base.OnFrameworkInitializationCompleted();
         }

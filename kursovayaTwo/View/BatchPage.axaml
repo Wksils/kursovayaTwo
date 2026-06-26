@@ -101,22 +101,31 @@
 
 
 				<ComboBox Width="180"
-                          Height="30"
-                          IsEditable="True"
-                          FontSize="14"
-                          ItemsSource="{Binding CodeList}"
-                          SelectedItem="{Binding SelectedCode, Mode=TwoWay}"
-                          Text="{Binding SelectedCode, Mode=TwoWay}"/>
+                    Height="30"
+                    IsEditable="True"
+                    FontSize="14"
+                    ItemsSource="{Binding CodeList}"
+                    SelectedItem="{Binding SelectedCode, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
 
 				<ComboBox Width="180"
-                          Height="30"
-                          DockPanel.Dock="Right"
-                          FontSize="14"
-                          ItemsSource="{Binding MaterialList}"
-                          DisplayMemberPath="Name"
-                          SelectedValuePath="MaterialId"
-                          SelectedValue="{Binding SelectedMaterialId, Mode=TwoWay}"/>
+                    Height="30"
+                    DockPanel.Dock="Right"
+                    FontSize="14"
+                    ItemsSource="{Binding MaterialList}"
+                    SelectedItem="{Binding SelectedMaterial, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
 
 			</DockPanel>

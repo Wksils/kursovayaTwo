@@ -13,7 +13,9 @@ public partial class AddEditBatch : Window
 {
     public MaterialBatch Batch { get; set; }
     public MaterialBatch EditCopy { get; set; }
+    private RawMaterial? _selectedMaterial;
 
+    private UnitsOfMeasure _selectedUom;
     public List<User> Users { get; set; }
     public List<LabTests> Tests { get; set; }
     public List<RawMaterial> Materials { get; set; }
@@ -65,7 +67,29 @@ public partial class AddEditBatch : Window
 
         _ = Load();
     }
+    public RawMaterial? SelectedMaterial
+    {
+        get => _selectedMaterial;
+        set
+        {
+            _selectedMaterial = value;
 
+            if (value != null)
+                EditCopy.MaterialId = value.MaterialId;
+        }
+    }
+
+    public UnitsOfMeasure? SelectedUom
+    {
+        get => _selectedUom;
+        set
+        {
+            _selectedUom = value;
+
+            if (value != null)
+                EditCopy.UomId = value.UomId;
+        }
+    }
     private async Task Load()
     {
         await service.GetMaterialBatches();

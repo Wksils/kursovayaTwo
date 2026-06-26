@@ -17,7 +17,7 @@ public partial class AddEditStep : Window
 
     private CardService service;
     private GetListsService listsService;
-
+    public bool IsCritical { get; set; }
     public AddEditStep(TechStep techStep)
     {
         InitializeComponent();
@@ -40,7 +40,7 @@ public partial class AddEditStep : Window
         btn.Content = TechStep.Name != null ? "Сохранить" : "Создать";
 
         DataContext = editCopy;
-
+        TechStep.IsCritical = editCopy.IsCritical;
         service = new CardService();
         listsService = new GetListsService();
 
